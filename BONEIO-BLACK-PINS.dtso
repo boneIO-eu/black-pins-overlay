@@ -1,0 +1,546 @@
+// SPDX-License-Identifier: GPL-3.0-only
+// boneIO Black Pins Overlay from board version v0.4
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/am33xx.h>
+
+/*
+ * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
+ */
+&{/chosen} {
+	overlays {
+		BONEIO-BLACK-PINS.kernel = __TIMESTAMP__;
+	};
+};
+
+&am33xx_pinmux {
+	bb_gpio_p8_37_pins: pinmux_bb_gpio_p8_37_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA8, PIN_INPUT_PULLUP, MUX_MODE7)	/* P8_37: gpio2[14] */
+		>;
+	};
+
+	bb_gpio_p8_38_pins: pinmux_bb_gpio_p8_38_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA9, PIN_INPUT_PULLUP, MUX_MODE7)	/* P8_38: gpio2[15] */
+		>;
+	};
+
+	bb_gpio_p8_39_pins: pinmux_bb_gpio_p8_39_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA6, PIN_INPUT, MUX_MODE7)	/* P8_39: gpio2[12] */
+		>;
+	};
+
+	bb_gpio_p8_40_pins: pinmux_bb_gpio_p8_40_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA7, PIN_INPUT, MUX_MODE7)	/* P8_40: gpio2[13] */
+		>;
+	};
+
+	bb_gpio_p8_41_pins: pinmux_bb_gpio_p8_41_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA4, PIN_INPUT, MUX_MODE7)	/* P8_41: gpio2[10] */
+		>;
+	};
+
+	bb_gpio_p8_42_pins: pinmux_bb_gpio_p8_42_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA5, PIN_INPUT, MUX_MODE7)	/* P8_42: gpio2[11] */
+		>;
+	};
+
+	bb_gpio_p8_43_pins: pinmux_bb_gpio_p8_43_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA2, PIN_INPUT, MUX_MODE7)	/* P8_43: gpio2[8] */
+		>;
+	};
+
+	bb_gpio_p8_44_pins: pinmux_bb_gpio_p8_44_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA3, PIN_INPUT, MUX_MODE7)	/* P8_44: gpio2[9] */
+		>;
+	};
+
+	bb_gpio_p8_45_pins: pinmux_bb_gpio_p8_45_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA0, PIN_INPUT_PULLUP, MUX_MODE7)	/* P8_45: gpio2[6] */
+		>;
+	};
+
+	bb_gpio_p8_46_pins: pinmux_bb_gpio_p8_46_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA1, PIN_INPUT_PULLUP, MUX_MODE7)	/* P8_46: gpio2[7] */
+		>;
+	};
+
+	bb_gpio_p9_41_pins: pinmux_bb_gpio_p9_41_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_XDMA_EVENT_INTR1, PIN_INPUT_PULLUP, MUX_MODE7)	/* P9_41: gpio0[20] */
+		>;
+	};
+
+	bb_gpio_p9_42_pins: pinmux_bb_gpio_p9_42_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_ECAP0_IN_PWM0_OUT, PIN_INPUT, MUX_MODE7)	/* P9_42: gpio0[7] */
+		>;
+	};
+
+	bb_gpio_p9_31_pins: pinmux_bb_gpio_p9_31_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_ACLKX, PIN_INPUT, MUX_MODE7)	/* P9_31: gpio3[14] */
+		>;
+	};
+
+	bb_gpio_p9_30_pins: pinmux_bb_gpio_p9_30_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR0, PIN_INPUT, MUX_MODE7)	/* P9_30: gpio3[16] */
+		>;
+	};
+
+	bb_gpio_p9_29_pins: pinmux_bb_gpio_p9_29_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_FSX, PIN_INPUT, MUX_MODE7)	/* P9_29: gpio3[15] */
+		>;
+	};
+
+	bb_gpio_p9_28_pins: pinmux_bb_gpio_p9_28_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_AHCLKR, PIN_INPUT, MUX_MODE7)	/* P9_28: gpio3[17] */
+		>;
+	};
+
+	bb_gpio_p9_27_pins: pinmux_bb_gpio_p9_27_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_FSR, PIN_INPUT, MUX_MODE7)	/* P9_27: gpio3[19] */
+		>;
+	};
+
+	bb_gpio_p9_25_pins: pinmux_bb_gpio_p9_25_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_AHCLKX, PIN_INPUT, MUX_MODE7)	/* P9_25: gpio3[21] */
+		>;
+	};
+
+	bb_gpio_p9_23_pins: pinmux_bb_gpio_p9_23_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_A1, PIN_INPUT, MUX_MODE7)	/* P9_23: gpio1[17] */
+		>;
+	};
+
+	bb_gpio_p9_22_pins: pinmux_bb_gpio_p9_22_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_SPI0_SCLK, PIN_INPUT_PULLUP, MUX_MODE7)	/* P9_22: gpio0[2] */
+		>;
+	};
+
+	bb_gpio_p9_21_pins: pinmux_bb_gpio_p9_21_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_SPI0_D0, PIN_INPUT_PULLUP, MUX_MODE7)	/* P9_21: gpio0[3] */
+		>;
+	};
+
+	bb_gpio_p9_18_pins: pinmux_bb_gpio_p9_18_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_SPI0_D1, PIN_INPUT, MUX_MODE7)	/* P9_18: gpio0[4] */
+		>;
+	};
+
+	bb_gpio_p9_17_pins: pinmux_bb_gpio_p9_17_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_SPI0_CS0, PIN_INPUT, MUX_MODE7)	/* P9_17: gpio0[5] */
+		>;
+	};
+
+	bb_gpio_p9_16_pins: pinmux_bb_gpio_p9_16_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_A3, PIN_INPUT, MUX_MODE7)	/* P9_16: gpio1[19] */
+		>;
+	};
+
+	bb_gpio_p9_15_pins: pinmux_bb_gpio_p9_15_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_A0, PIN_INPUT, MUX_MODE7)	/* P9_15: gpio1[16] */
+		>;
+	};
+
+	bb_gpio_p9_14_pins: pinmux_bb_gpio_p9_14_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_A2, PIN_INPUT, MUX_MODE7)	/* P9_14: gpio1[18] */
+		>;
+	};
+
+	bb_gpio_p8_10_pins: pinmux_bb_gpio_p8_10_pins {
+		pinctrl-single,pins = <
+		AM33XX_PADCONF(AM335X_PIN_GPMC_ADVN_ALE, PIN_INPUT, MUX_MODE7)	/* P8_10: gpio2[4] */
+		>;
+	};
+	
+	bb_gpio_p8_7_pins: pinmux_bb_gpio_p8_7_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_WEN, PIN_INPUT, MUX_MODE7)	/* P8_7: gpio2[2] */
+		>;
+	};
+
+	bb_gpio_p8_8_pins: pinmux_bb_gpio_p8_8_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_OEN_REN, PIN_INPUT, MUX_MODE7)	/* P8_8: gpio2[3] */
+		>;
+	};
+
+	bb_gpio_p8_9_pins: pinmux_bb_gpio_p8_9_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_BEN0_CLE, PIN_INPUT, MUX_MODE7)	/* P8_9: gpio2[5] */
+		>;
+	};
+
+	bb_gpio_p8_36_pins: pinmux_bb_gpio_p8_36_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA10, PIN_INPUT_PULLUP, MUX_MODE7)	/* P8_36: gpio2[16] */
+		>;
+	};
+
+	bb_gpio_p8_35_pins: pinmux_bb_gpio_p8_35_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA12, PIN_INPUT_PULLUP, MUX_MODE7)	/* P8_35: gpio0[8] */
+		>;
+	};
+
+	bb_gpio_p8_34_pins: pinmux_bb_gpio_p8_34_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA11, PIN_INPUT_PULLUP, MUX_MODE7)	/* P8_34: gpio2[17] */
+		>;
+	};
+
+	bb_gpio_p8_33_pins: pinmux_bb_gpio_p8_33_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA13, PIN_INPUT_PULLUP, MUX_MODE7)	/* P8_33: gpio0[9] */
+		>;
+	};
+
+	bb_gpio_p8_32_pins: pinmux_bb_gpio_p8_32_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA15, PIN_INPUT_PULLUP, MUX_MODE7)	/* P8_32: gpio0[11] */
+		>;
+	};
+
+	bb_gpio_p8_31_pins: pinmux_bb_gpio_p8_31_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_DATA14, PIN_INPUT_PULLUP, MUX_MODE7)	/* P8_31: gpio0[10] */
+		>;
+	};
+
+	bb_gpio_p8_30_pins: pinmux_bb_gpio_p8_30_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_AC_BIAS_EN, PIN_INPUT, MUX_MODE7)	/* P8_30: gpio2[25] */
+		>;
+	};
+
+	bb_gpio_p8_29_pins: pinmux_bb_gpio_p8_29_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_VSYNC, PIN_INPUT, MUX_MODE7)	/* P8_29: gpio2[23] */
+		>;
+	};
+
+	bb_gpio_p8_28_pins: pinmux_bb_gpio_p8_28_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_PCLK, PIN_INPUT, MUX_MODE7)	/* P8_28: gpio2[24] */
+		>;
+	};
+
+	bb_gpio_p8_27_pins: pinmux_bb_gpio_p8_27_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_LCD_VSYNC, PIN_INPUT, MUX_MODE7)	/* P8_27: gpio2[22] */
+		>;
+	};
+
+	bb_gpio_p8_26_pins: pinmux_bb_gpio_p8_26_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_CSN0, PIN_INPUT, MUX_MODE7)	/* P8_26: gpio1[29] */
+		>;
+	};
+
+	bb_gpio_p8_19_pins: pinmux_bb_gpio_p8_19_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD8, PIN_INPUT, MUX_MODE7)	/* P8_19: gpio0[22] */
+		>;
+	};
+
+	bb_gpio_p8_18_pins: pinmux_bb_gpio_p8_18_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_CLK, PIN_INPUT, MUX_MODE7)	/* P8_18: gpio2[1] */
+		>;
+	};
+
+	bb_gpio_p8_17_pins: pinmux_bb_gpio_p8_17_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD11, PIN_INPUT, MUX_MODE7)	/* P8_17: gpio0[27] */
+		>;
+	};
+
+	bb_gpio_p8_16_pins: pinmux_bb_gpio_p8_16_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD14, PIN_INPUT, MUX_MODE7)	/* P8_16: gpio1[14] */
+		>;
+	};
+
+	bb_gpio_p8_15_pins: pinmux_bb_gpio_p8_15_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD15, PIN_INPUT, MUX_MODE7)	/* P8_15: gpio1[15] */
+		>;
+	};
+
+	bb_gpio_p8_14_pins: pinmux_bb_gpio_p8_14_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD10, PIN_INPUT, MUX_MODE7)	/* P8_14: gpio0[26] */
+		>;
+	};
+
+	bb_gpio_p8_13_pins: pinmux_bb_gpio_p8_13_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD9, PIN_INPUT, MUX_MODE7)	/* P8_13: gpio0[23] */
+		>;
+	};
+
+	bb_gpio_p8_12_pins: pinmux_bb_gpio_p8_12_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD12, PIN_INPUT, MUX_MODE7)	/* P8_12: gpio1[12] */
+		>;
+	};
+
+	bb_gpio_p8_11_pins: pinmux_bb_gpio_p8_11_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD13, PIN_INPUT, MUX_MODE7)	/* P8_11: gpio1[13] */
+		>;
+	};
+
+	i2c2_pins: i2c2-pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_UART1_CTSN, PIN_INPUT_PULLUP, MUX_MODE3)	/* (D18) uart1_ctsn.I2C2_SDA */
+			AM33XX_PADCONF(AM335X_PIN_UART1_RTSN, PIN_INPUT_PULLUP, MUX_MODE3)	/* (D17) uart1_rtsn.I2C2_SCL */
+		>;
+	};
+
+	bb_uart1_pins: pinmux_bb_uart1_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_OUTPUT, MUX_MODE0)	/* P9_24 uart1_txd.uart1_txd */
+			AM33XX_PADCONF(AM335X_PIN_UART1_RXD, PIN_INPUT, MUX_MODE0)	/* P9_26 uart1_rxd.uart1_rxd */
+		>;
+	};
+
+	bb_uart4_pins: pinmux_bb_uart4_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_WPN, PIN_OUTPUT, MUX_MODE6)	/* P9_13 gpmc_wpn.uart4_txd_mux2 */
+			AM33XX_PADCONF(AM335X_PIN_GPMC_WAIT0, PIN_INPUT, MUX_MODE6)	/* P9_11 gpmc_wait0.uart4_rxd_mux2 */
+		>;
+	};
+
+	bb_w1_pins: pinmux_bb_w1_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_BEN1, PIN_INPUT_PULLUP, MUX_MODE7)	/* P9_12: gpio1[28] */
+		>;
+	};
+};
+
+/* Konfiguracja I2C2 */
+&i2c2 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c2_pins>;
+	clock-frequency = <100000>;
+};
+
+/* Konfiguracja UART1 */
+&uart1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&bb_uart1_pins>;
+};
+
+/* Konfiguracja UART4 */
+&uart4 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&bb_uart4_pins>;
+};
+
+/* Nazwy GPIO dla łatwiejszej identyfikacji */
+&gpio0 {
+	gpio-line-names =
+		"[mdio_data]",
+		"[mdio_clk]",
+		"P9_22 [IN_19]",      /* gpioChip3 gpio0[2] - zmienione z [spi0_sclk] */
+		"P9_21 [IN_20]",      /* gpioChip3 gpio0[3] - zmienione z [spi0_d0] */
+		"P9_18 [IN_21]",      /* gpioChip3 gpio0[4] - zmienione z [spi0_d1] */
+		"P9_17 [IN_22]",      /* gpioChip3 gpio0[5] - zmienione z [spi0_cs0] */
+		"[mmc0_cd]",
+		"P9_42A [IN_11]",      /* gpioChip3 gpio0[7] - zmienione z [ecappwm0] */
+		"P8_35 [IN_30]",
+		"P8_33 [IN_32]",
+		"P8_31 [IN_34]",
+		"P8_32 [IN_33]",
+		"P9_20 [i2c2_sda]",
+		"P9_19 [i2c2_scl]",
+		"P9_26 [uart1_rxd]",
+		"P9_24 [uart1_txd]",
+		"[rmii1_txd3]",
+		"[rmii1_txd2]",
+		"[usb0_drvvbus]",
+		"[hdmi cec]",
+		"P9_41 [BONEIO_OLED_BTN]",
+		"[rmii1_txd1]",
+		"P8_19 [IN_40]",
+		"P8_13 [IN_46]",
+		"NC",
+		"NC",
+		"P8_14 [IN_45]",
+		"P8_17 [IN_42]",
+		"[rmii1_txd0]",
+		"[rmii1_refclk]",
+		"P9_11 [uart4_rxd]",
+		"P9_13 [uart4_txd]";
+};
+
+&gpio1 {
+	gpio-line-names =
+		"P8_25 [mmc1_dat0]",
+		"[mmc1_dat1]",
+		"P8_5 [mmc1_dat2]",
+		"P8_6 [mmc1_dat3]",
+		"P8_23 [mmc1_dat4]",
+		"P8_22 [mmc1_dat5]",
+		"P8_3 [mmc1_dat6]",
+		"P8_4 [mmc1_dat7]",
+		"NC",
+		"NC",
+		"NC",
+		"NC",
+		"P8_12 [IN_47]",
+		"P8_11 [IN_48]",
+		"P8_16 [IN_43]",
+		"P8_15 [IN_44]",
+		"P9_15A [IN_23]",      /* gpioChip0 gpio1[16] - zmienione z [P9_15A] */
+		"P9_23 [IN_18]",      /* gpioChip0 gpio1[17] - zmienione z [NOTHING] */
+		"P9_14 [IN_25]",
+		"P9_16 [IN_24]",      /* gpioChip0 gpio1[19] - zmienione z [ehrpwm1b] */
+		"[emmc rst]",
+		"[usr0 led]",
+		"[usr1 led]",
+		"[usr2 led]",
+		"[usr3 led]",
+		"[hdmi irq]",
+		"[usb vbus oc]",
+		"[hdmi audio]",
+		"P9_12 [ONEWIRE]",
+		"P8_26 [IN_39]",
+		"P8_21 [emmc]",
+		"P8_20 [emmc]";
+};
+
+&gpio2 {
+	gpio-line-names =
+		"P9_15B",
+		"P8_18 [IN_41]",
+		"P8_7 [IN_26]",
+		"P8_8 [IN_27]",
+		"P8_10 [IN_49]",
+		"P8_9 [IN_28]",
+		"P8_45 [IN_09]",      /* gpiochip1 gpio2[6] - zmienione z [hdmi] */
+		"P8_46 [IN_10]",      /* gpiochip1 gpio2[7] - zmienione z [hdmi] */
+		"P8_43 [IN_07]",      /* gpiochip1 gpio2[8] - zmienione z [hdmi] */
+		"P8_44 [IN_08]",      /* gpiochip1 gpio2[9] - zmienione z [hdmi] */
+		"P8_41 [IN_05]",      /* gpiochip1 gpio2[10] - zmienione z [hdmi] */
+		"P8_42 [IN_06]",      /* gpiochip1 gpio2[11] - zmienione z [hdmi] */
+		"P8_39 [IN_03]",      /* gpiochip1 gpio2[12] - zmienione z [hdmi] */
+		"P8_40 [IN_04]",      /* gpiochip1 gpio2[13] - zmienione z [hdmi] */
+		"P8_37 [IN_01]",      /* gpiochip1 gpio2[14] - zmienione z [hdmi] */
+		"P8_38 [IN_02]",      /* gpiochip1 gpio2[15] - zmienione z [hdmi] */
+		"P8_36 [IN_29]",
+		"P8_34 [IN_31]",
+		"[rmii1_rxd3]",
+		"[rmii1_rxd2]",
+		"[rmii1_rxd1]",
+		"[rmii1_rxd0]",
+		"P8_27 [IN_38]",
+		"P8_29 [IN_36]",
+		"P8_28 [IN_37]",
+		"P8_30 [IN_35]",       /* gpiochip1 gpio2[25] - zmienione z [hdmi] */
+		"[mmc0_dat3]",
+		"[mmc0_dat2]",
+		"[mmc0_dat1]",
+		"[mmc0_dat0]",
+		"[mmc0_clk]",
+	"[mmc0_cmd]";
+};
+
+&gpio3 {
+	gpio-line-names =
+		"[mii col]",
+		"[mii crs]",
+		"[mii rx err]",
+		"[mii tx en]",
+		"[mii rx dv]",
+		"[i2c0 sda]",
+		"[i2c0 scl]",
+		"[jtag emu0]",
+		"[jtag emu1]",
+		"[mii tx clk]",
+		"[mii rx clk]",
+		"NC",
+		"NC",
+		"[usb vbus en]",
+		"P9_31 [IN_12]",      /* gpiochip2 gpio3[14] - zmienione z [spi1_sclk] */
+		"P9_29 [IN_14]",      /* gpioChip2 gpio3[15] - zmienione z [spi1_d0] */
+		"P9_30 [IN_13]",      /* gpioChip2 gpio3[16] - zmienione z [spi1_d1] */
+		"P9_28 [IN_15]",      /* gpioChip2 gpio3[17] - zmienione z [spi1_cs0] */
+		"P9_42B [ecappwm0]",
+		"P9_27 [IN_16]",      /* gpioChip2 gpio3[19] - zmienione */
+		"P9_41A",
+		"P9_25 [IN_17]",      /* gpioChip2 gpio3[21] - zmienione */
+		"NC",
+		"NC",
+		"NC",
+		"NC",
+		"NC",
+		"NC",
+		"NC",
+		"NC",
+		"NC",
+		"NC";
+};
+
+&{/} {
+	onewire {
+		compatible = "w1-gpio";
+		pinctrl-names = "default";
+		pinctrl-0 = <&bb_w1_pins>;
+		gpios = <&gpio1 28 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
+
+	gpio_keys {
+		pinctrl-names = "default";
+		pinctrl-0 = <&bb_gpio_p8_37_pins>, <&bb_gpio_p8_38_pins>, <&bb_gpio_p8_39_pins>,
+			    <&bb_gpio_p8_40_pins>, <&bb_gpio_p8_41_pins>, <&bb_gpio_p8_42_pins>,
+			    <&bb_gpio_p8_43_pins>, <&bb_gpio_p8_44_pins>, <&bb_gpio_p8_45_pins>,
+			    <&bb_gpio_p8_46_pins>, <&bb_gpio_p9_41_pins>, <&bb_gpio_p9_42_pins>, <&bb_gpio_p9_31_pins>,
+			    <&bb_gpio_p9_30_pins>, <&bb_gpio_p9_29_pins>, <&bb_gpio_p9_28_pins>,
+			    <&bb_gpio_p9_27_pins>, <&bb_gpio_p9_25_pins>, <&bb_gpio_p9_23_pins>,
+			    <&bb_gpio_p9_22_pins>, <&bb_gpio_p9_21_pins>, <&bb_gpio_p9_18_pins>,
+			    <&bb_gpio_p9_17_pins>, <&bb_gpio_p9_16_pins>, <&bb_gpio_p9_15_pins>,
+			    <&bb_gpio_p9_14_pins>, <&bb_gpio_p8_7_pins>, <&bb_gpio_p8_8_pins>,
+			    <&bb_gpio_p8_9_pins>, <&bb_gpio_p8_36_pins>, <&bb_gpio_p8_35_pins>,
+			    <&bb_gpio_p8_34_pins>, <&bb_gpio_p8_33_pins>, <&bb_gpio_p8_32_pins>,
+			    <&bb_gpio_p8_31_pins>, <&bb_gpio_p8_29_pins>, <&bb_gpio_p8_28_pins>,
+			    <&bb_gpio_p8_27_pins>, <&bb_gpio_p8_26_pins>, <&bb_gpio_p8_30_pins>,
+			    <&bb_gpio_p8_19_pins>, <&bb_gpio_p8_18_pins>, <&bb_gpio_p8_17_pins>,
+			    <&bb_gpio_p8_16_pins>, <&bb_gpio_p8_15_pins>, <&bb_gpio_p8_14_pins>,
+			    <&bb_gpio_p8_13_pins>, <&bb_gpio_p8_12_pins>, <&bb_gpio_p8_11_pins>,
+			    <&bb_gpio_p8_10_pins>;
+
+		compatible = "gpio-keys";
+	};
+};
