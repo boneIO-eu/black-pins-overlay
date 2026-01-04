@@ -1,73 +1,93 @@
 #!/bin/bash
 ## RUN sudo ./prepare_image.sh
-# Sprawdzenie, czy skrypt jest uruchomiony z sudo/jako root
+# Check if script is run with sudo/root privileges
 if [[ $EUID -ne 0 ]]; then
-   echo "BŁĄD: Ten skrypt musi być uruchomiony z uprawnieniami sudo!" 
-   echo "Użyj: sudo $0"
+   echo "ERROR: This script must be run with sudo privileges!" 
+   echo "Usage: sudo $0"
    exit 1
 fi
 
-echo "--- START: Przygotowanie obrazu Debian 13 ---"
+echo "--- START: Preparing Debian 13 image ---"
 
-# --- 0. KONFIGURACJA UTF-8 ---
-echo "0/5: Konfigurowanie locale UTF-8..."
+# --- 0. UTF-8 CONFIGURATION ---
+echo "0/5: Configuring UTF-8 locale..."
 sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen en_US.UTF-8
 update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
-# --- 1. USTAWIENIE HOSTNAME ---
-echo "1/5: Ustawianie hostname na podstawie MAC (blkXXXXXX)..."
+# --- 1. ONE-TIME HOSTNAME SETUP ---
+echo "1/5: Installing one-time hostname setup service..."
 
+cat << 'EOF' > /usr/local/bin/set-hostname-once.sh
+#!/bin/bash
 MAC=$(cat /sys/class/net/eth0/address 2>/dev/null)
 if [ -n "$MAC" ] && [ "$MAC" != "none" ]; then
     MAC_CLEAN=$(echo $MAC | tr -d ':')
     ID=${MAC_CLEAN: -6}
     NEW_HOSTNAME="blk$ID"
-    
     hostnamectl set-hostname "$NEW_HOSTNAME"
     sed -i "s/127.0.1.1.*/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
-    echo "   Hostname ustawiony na: $NEW_HOSTNAME"
-else
-    echo "   UWAGA: Nie udało się odczytać MAC, hostname nie zmieniony"
 fi
+# Disable service after execution
+systemctl disable set-hostname-once.service
+EOF
+chmod +x /usr/local/bin/set-hostname-once.sh
 
-# --- 2. CZYSZCZENIE APT ---
-echo "2/5: Czyszczenie pakietów i cache APT..."
+cat << 'EOF' > /etc/systemd/system/set-hostname-once.service
+[Unit]
+Description=Set hostname based on MAC (runs once)
+After=network-pre.target
+Before=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/set-hostname-once.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl enable set-hostname-once.service
+echo "   Service set-hostname-once.service installed"
+
+# --- 2. APT CLEANUP ---
+echo "2/5: Cleaning packages and APT cache..."
 apt-get autoremove -y
 apt-get clean
 
-# --- 3. CZYSZCZENIE SYSTEMU ---
-echo "3/5: Usuwanie unikalnych identyfikatorów i logów..."
+# --- 3. SYSTEM CLEANUP ---
+echo "3/5: Removing unique identifiers and logs..."
 
-# Czyszczenie logów systemd
+# Clean systemd logs
 journalctl --vacuum-time=0d
 
-# Czyszczenie Machine ID (kluczowe dla DHCP)
+# Clean Machine ID (important for DHCP)
 truncate -s 0 /etc/machine-id
 rm -f /var/lib/dbus/machine-id
 ln -sf /etc/machine-id /var/lib/dbus/machine-id
 
-# Usuwanie dzierżaw DHCP
+# Remove DHCP leases
 rm -rf /var/lib/dhcp/*
 rm -rf /var/lib/NetworkManager/*.lease
 
-# Usuwanie unikalnych kluczy SSH i wymuszenie regeneracji przy starcie
+# Remove SSH host keys and force regeneration on boot
 rm -f /etc/ssh/ssh_host_*
 touch /etc/bbb.io/ssh_regenerate
 
-# Czyszczenie logów tekstowych i katalogów tmp
+# Clean text logs and tmp directories
 find /var/log -type f -exec truncate -s 0 {} \;
 rm -rf /tmp/*
 rm -rf /var/tmp/*
 
-# --- 4. FINALIZACJA ---
-echo "4/5: Wyłączanie systemu..."
+# --- 4. FINALIZATION ---
+echo "4/5: Shutting down system..."
 echo "--------------------------------------------------------"
-echo "GOTOWE! Hostname przy starcie zostanie ustawiony na blk[MAC]."
-echo "System wyłączy się za 3 sekundy. Potem wyjmij kartę i zrób obraz."
+echo "DONE! Hostname will be set to blk[MAC] on first boot."
+echo "System will shut down in 3 seconds. Then remove the card and create image."
 echo "--------------------------------------------------------"
 
 sleep 3
-# Czyszczenie historii bieżącej sesji przed samym końcem
+# Clear current session history before shutdown
 history -c
 poweroff
