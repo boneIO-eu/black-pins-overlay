@@ -9,8 +9,15 @@ fi
 
 echo "--- START: Przygotowanie obrazu Debian 13 ---"
 
+# --- 0. KONFIGURACJA UTF-8 ---
+echo "0/5: Konfigurowanie locale UTF-8..."
+sed -i 's/# pl_PL.UTF-8 UTF-8/pl_PL.UTF-8 UTF-8/' /etc/locale.gen
+sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+locale-gen
+update-locale LANG=pl_PL.UTF-8 LC_ALL=pl_PL.UTF-8
+
 # --- 1. DYNAMICZNY HOSTNAME ---
-echo "1/4: Konfigurowanie usługi dynamicznego hostname (blkXXXXXX)..."
+echo "1/5: Konfigurowanie usługi dynamicznego hostname (blkXXXXXX)..."
 
 cat << 'EOF' > /usr/local/bin/set-dynamic-hostname.sh
 #!/bin/bash
@@ -46,12 +53,12 @@ EOF
 systemctl enable dynamic-hostname.service
 
 # --- 2. CZYSZCZENIE APT ---
-echo "2/4: Czyszczenie pakietów i cache APT..."
+echo "2/5: Czyszczenie pakietów i cache APT..."
 apt-get autoremove -y
 apt-get clean
 
 # --- 3. CZYSZCZENIE SYSTEMU ---
-echo "3/4: Usuwanie unikalnych identyfikatorów i logów..."
+echo "3/5: Usuwanie unikalnych identyfikatorów i logów..."
 
 # Czyszczenie logów systemd
 journalctl --vacuum-time=0d
@@ -74,7 +81,7 @@ rm -rf /tmp/*
 rm -rf /var/tmp/*
 
 # --- 4. FINALIZACJA ---
-echo "4/4: Wyłączanie systemu..."
+echo "4/5: Wyłączanie systemu..."
 echo "--------------------------------------------------------"
 echo "GOTOWE! Hostname przy starcie zostanie ustawiony na blk[MAC]."
 echo "System wyłączy się za 3 sekundy. Potem wyjmij kartę i zrób obraz."
