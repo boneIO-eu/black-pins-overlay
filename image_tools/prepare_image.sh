@@ -11,10 +11,9 @@ echo "--- START: Przygotowanie obrazu Debian 13 ---"
 
 # --- 0. KONFIGURACJA UTF-8 ---
 echo "0/5: Konfigurowanie locale UTF-8..."
-sed -i 's/# pl_PL.UTF-8 UTF-8/pl_PL.UTF-8 UTF-8/' /etc/locale.gen
 sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
-locale-gen
-update-locale LANG=pl_PL.UTF-8 LC_ALL=pl_PL.UTF-8
+locale-gen en_US.UTF-8
+update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
 # --- 1. USTAWIENIE HOSTNAME ---
 echo "1/5: Ustawianie hostname na podstawie MAC (blkXXXXXX)..."
@@ -52,8 +51,9 @@ ln -sf /etc/machine-id /var/lib/dbus/machine-id
 rm -rf /var/lib/dhcp/*
 rm -rf /var/lib/NetworkManager/*.lease
 
-# Usuwanie unikalnych kluczy SSH
+# Usuwanie unikalnych kluczy SSH i wymuszenie regeneracji przy starcie
 rm -f /etc/ssh/ssh_host_*
+touch /etc/bbb.io/ssh_regenerate
 
 # Czyszczenie logów tekstowych i katalogów tmp
 find /var/log -type f -exec truncate -s 0 {} \;
