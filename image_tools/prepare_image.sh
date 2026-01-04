@@ -16,41 +16,21 @@ sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 update-locale LANG=pl_PL.UTF-8 LC_ALL=pl_PL.UTF-8
 
-# --- 1. DYNAMICZNY HOSTNAME ---
-echo "1/5: Konfigurowanie usługi dynamicznego hostname (blkXXXXXX)..."
+# --- 1. USTAWIENIE HOSTNAME ---
+echo "1/5: Ustawianie hostname na podstawie MAC (blkXXXXXX)..."
 
-cat << 'EOF' > /usr/local/bin/set-dynamic-hostname.sh
-#!/bin/bash
-MAC=$(cat /sys/class/net/eth0/address 2>/dev/null || cat /sys/class/net/wlan0/address)
-if [ -z "$MAC" ] || [ "$MAC" = "none" ]; then exit 1; fi
-
-MAC_CLEAN=$(echo $MAC | tr -d ':')
-ID=${MAC_CLEAN: -6}
-NEW_HOSTNAME="blk$ID"
-
-hostnamectl set-hostname "$NEW_HOSTNAME"
-sed -i "s/127.0.1.1.*/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
-EOF
-
-chmod +x /usr/local/bin/set-dynamic-hostname.sh
-
-# Usługa systemd (zawsze startuje jako root)
-cat << 'EOF' > /etc/systemd/system/dynamic-hostname.service
-[Unit]
-Description=Set dynamic hostname base`d on MAC
-Before=network.target
-DefaultDependencies=no
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/set-dynamic-hostname.sh
-RemainAfterExit=yes
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl enable dynamic-hostname.service
+MAC=$(cat /sys/class/net/eth0/address 2>/dev/null)
+if [ -n "$MAC" ] && [ "$MAC" != "none" ]; then
+    MAC_CLEAN=$(echo $MAC | tr -d ':')
+    ID=${MAC_CLEAN: -6}
+    NEW_HOSTNAME="blk$ID"
+    
+    hostnamectl set-hostname "$NEW_HOSTNAME"
+    sed -i "s/127.0.1.1.*/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
+    echo "   Hostname ustawiony na: $NEW_HOSTNAME"
+else
+    echo "   UWAGA: Nie udało się odczytać MAC, hostname nie zmieniony"
+fi
 
 # --- 2. CZYSZCZENIE APT ---
 echo "2/5: Czyszczenie pakietów i cache APT..."
