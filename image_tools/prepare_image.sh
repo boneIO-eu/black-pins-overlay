@@ -88,6 +88,8 @@ echo "System will shut down in 3 seconds. Then remove the card and create image.
 echo "--------------------------------------------------------"
 
 sleep 3
-# Clear current session history before shutdown
+# Clear bash history
 history -c
+rm -f /root/.bash_history
+rm -f /home/*/.bash_history
 poweroff
