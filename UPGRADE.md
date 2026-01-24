@@ -74,6 +74,35 @@ Sprawdź czy UART1 jest dostępny:
 ls -la /dev/ttyO1
 ```
 
+## Konfiguracja uprawnień dla CAN
+
+Aplikacja boneIO działa jako user `boneio`, więc potrzebuje uprawnień do konfiguracji interfejsu CAN.
+
+### Opcja A: Sudoers (zalecane jeśli chcesz zmieniać bitrate z aplikacji)
+
+```bash
+sudo tee /etc/sudoers.d/boneio-can << 'EOF'
+boneio ALL=(ALL) NOPASSWD: /sbin/ip link set can0 *
+EOF
+sudo chmod 440 /etc/sudoers.d/boneio-can
+```
+
+### Opcja B: Automatyczna konfiguracja przy starcie (stały bitrate)
+
+Utwórz `/etc/systemd/network/80-can.network`:
+```bash
+sudo tee /etc/systemd/network/80-can.network << 'EOF'
+[Match]
+Name=can0
+
+[CAN]
+BitRate=125000
+EOF
+
+sudo systemctl enable systemd-networkd
+sudo systemctl restart systemd-networkd
+```
+
 ## Rozwiązywanie problemów
 
 ### Brak interfejsu can0
