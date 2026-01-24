@@ -1,0 +1,40 @@
+// SPDX-License-Identifier: GPL-3.0-only
+// boneIO Black Pins Overlay - UART1 variant for board version v0.3
+// Use this overlay instead of BONEIO-BLACK-PINS if you have v0.3 board
+// with Modbus on UART1 (P9.24/P9.26) instead of CAN bus.
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/am33xx.h>
+
+/*
+ * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
+ */
+&{/chosen} {
+	overlays {
+		BONEIO-BLACK-PINS-UART1.kernel = __TIMESTAMP__;
+	};
+};
+
+&am33xx_pinmux {
+	bb_uart1_pins: pinmux_bb_uart1_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_OUTPUT, MUX_MODE0)	/* P9_24 uart1_txd.uart1_txd */
+			AM33XX_PADCONF(AM335X_PIN_UART1_RXD, PIN_INPUT, MUX_MODE0)	/* P9_26 uart1_rxd.uart1_rxd */
+		>;
+	};
+};
+
+/* Wyłącz DCAN1 - piny używane przez UART1 */
+&dcan1 {
+	status = "disabled";
+};
+
+/* Włącz UART1 dla Modbus (v0.3 board) */
+&uart1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&bb_uart1_pins>;
+};

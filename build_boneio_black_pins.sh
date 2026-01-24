@@ -1,51 +1,75 @@
 #!/bin/bash
 
-# Script to build and install only BONEIO-BLACK-PINS.dtso overlay for BeagleBone Black
+# Script to build and install boneIO Black overlays for BeagleBone Black
+# 
+# Overlays:
+#   - BONEIO-BLACK-PINS.dtbo      (default, CAN bus on P9.24/P9.26 for v0.4+)
+#   - BONEIO-BLACK-PINS-UART1.dtbo (UART1/Modbus on P9.24/P9.26 for v0.3)
 
-OVERLAY_FILE="BONEIO-BLACK-PINS.dtso"
-OVERLAY_TARGET="BONEIO-BLACK-PINS.dtbo"
+OVERLAYS=(
+    "BONEIO-BLACK-PINS"
+    "BONEIO-BLACK-PINS-UART1"
+)
 
-echo "Building BONEIO-BLACK-PINS overlay for BeagleBone Black..."
+echo "Building boneIO Black overlays for BeagleBone Black..."
 
-# Check if the overlay file exists
-if [ ! -f "$OVERLAY_FILE" ]; then
-    echo "Error: Overlay file $OVERLAY_FILE not found!"
-    exit 1
-fi
+# Check if overlay files exist
+for overlay in "${OVERLAYS[@]}"; do
+    if [ ! -f "${overlay}.dtso" ]; then
+        echo "Error: Overlay file ${overlay}.dtso not found!"
+        exit 1
+    fi
+done
 
-# Clean any existing build artifacts for this overlay
-if [ -f "$OVERLAY_TARGET" ]; then
-    rm -f "$OVERLAY_TARGET"
-    echo "Cleaned existing overlay binary"
-fi
+# Clean any existing build artifacts
+for overlay in "${OVERLAYS[@]}"; do
+    if [ -f "${overlay}.dtbo" ]; then
+        rm -f "${overlay}.dtbo"
+    fi
+done
+echo "Cleaned existing overlay binaries"
 
-# Build the specific overlay
-make BONEIO-BLACK-PINS.dtbo
+# Build all overlays
+make all
 
 if [ $? -eq 0 ]; then
-    echo "BONEIO-BLACK-PINS overlay: Built successfully"
+    echo "All overlays: Built successfully"
 else
-    echo "Error: Failed to build BONEIO-BLACK-PINS overlay"
+    echo "Error: Failed to build overlays"
     exit 1
 fi
 
-# Install the overlay for BeagleBone Black (ARM)
-echo "Installing BONEIO-BLACK-PINS overlay for BeagleBone Black..."
+# Install overlays for BeagleBone Black (ARM)
+echo "Installing boneIO Black overlays..."
 KERNEL_VERSION=$(uname -r)
+
+install_overlays() {
+    local dest="/boot/dtbs/$KERNEL_VERSION/overlays/"
+    mkdir -p "$dest"
+    for overlay in "${OVERLAYS[@]}"; do
+        cp "${overlay}.dtbo" "$dest"
+    done
+}
+
 if ! id | grep -q root; then
     echo "Install: Password required for sudo..."
-    sudo mkdir -p /boot/dtbs/$KERNEL_VERSION/overlays/
-    sudo cp "$OVERLAY_TARGET" /boot/dtbs/$KERNEL_VERSION/overlays/
+    sudo bash -c "$(declare -f install_overlays); KERNEL_VERSION=$KERNEL_VERSION OVERLAYS=(${OVERLAYS[*]}) install_overlays"
 else
-    mkdir -p /boot/dtbs/$KERNEL_VERSION/overlays/
-    cp "$OVERLAY_TARGET" /boot/dtbs/$KERNEL_VERSION/overlays/
+    install_overlays
 fi
 
 if [ $? -eq 0 ]; then
-    echo "BONEIO-BLACK-PINS overlay: Installed successfully"
+    echo ""
+    echo "Installed overlays:"
+    echo "  - BONEIO-BLACK-PINS.dtbo      (default, CAN bus on P9.24/P9.26)"
+    echo "  - BONEIO-BLACK-PINS-UART1.dtbo (for v0.3 boards with Modbus on UART1)"
+    echo ""
+    echo "For v0.3 boards, add to /boot/uEnv.txt:"
+    echo "  uboot_overlay_addr5=/boot/dtbs/$KERNEL_VERSION/overlays/BONEIO-BLACK-PINS-UART1.dtbo"
 else
-    echo "Error: Failed to install BONEIO-BLACK-PINS overlay"
+    echo "Error: Failed to install overlays"
     exit 1
 fi
 
-echo "BONEIO-BLACK-PINS overlay build and install completed!"
+echo ""
+echo "boneIO Black overlay build and install completed!"
