@@ -331,6 +331,13 @@
 		>;
 	};
 
+	bb_dcan1_pins: pinmux_bb_dcan1_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_OUTPUT_PULLUP, MUX_MODE2)	/* P9_24 uart1_txd.dcan1_tx */
+			AM33XX_PADCONF(AM335X_PIN_UART1_RXD, PIN_INPUT_PULLUP, MUX_MODE2)	/* P9_26 uart1_rxd.dcan1_rx */
+		>;
+	};
+
 	bb_uart4_pins: pinmux_bb_uart4_pins {
 		pinctrl-single,pins = <
 			AM33XX_PADCONF(AM335X_PIN_GPMC_WPN, PIN_OUTPUT, MUX_MODE6)	/* P9_13 gpmc_wpn.uart4_txd_mux2 */
@@ -353,11 +360,16 @@
 	clock-frequency = <100000>;
 };
 
-/* Konfiguracja UART1 */
+/* Konfiguracja UART1 - WYŁĄCZONE, piny używane przez DCAN1 (CAN bus) */
 &uart1 {
+	status = "disabled";
+};
+
+/* Konfiguracja DCAN1 (CAN bus) na pinach P9.24/P9.26 */
+&dcan1 {
 	status = "okay";
 	pinctrl-names = "default";
-	pinctrl-0 = <&bb_uart1_pins>;
+	pinctrl-0 = <&bb_dcan1_pins>;
 };
 
 /* Konfiguracja UART4 */
@@ -384,8 +396,8 @@
 		"P8_32 [IN_33]",
 		"P9_20 [i2c2_sda]",
 		"P9_19 [i2c2_scl]",
-		"P9_26 [uart1_rxd]",
-		"P9_24 [uart1_txd]",
+		"P9_26 [dcan1_rx]",
+		"P9_24 [dcan1_tx]",
 		"[rmii1_txd3]",
 		"[rmii1_txd2]",
 		"[usb0_drvvbus]",

@@ -80,6 +80,18 @@ find /var/log -type f -exec truncate -s 0 {} \;
 rm -rf /tmp/*
 rm -rf /var/tmp/*
 
+# Clear Caddy certificates (so new device generates fresh certs with correct hostname)
+CADDY_DATA_DIR="/home/boneio/docker/nodered/caddy/data"
+CADDY_CONFIG_DIR="/home/boneio/docker/nodered/caddy/config"
+if [ -d "$CADDY_DATA_DIR" ]; then
+    rm -rf "$CADDY_DATA_DIR"/*
+    echo "   Cleared Caddy data directory"
+fi
+if [ -d "$CADDY_CONFIG_DIR" ]; then
+    rm -rf "$CADDY_CONFIG_DIR"/*
+    echo "   Cleared Caddy config directory"
+fi
+
 # --- 4. FINALIZATION ---
 echo "4/5: Shutting down system..."
 echo "--------------------------------------------------------"
