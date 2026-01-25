@@ -53,7 +53,7 @@ install_overlays() {
 
 if ! id | grep -q root; then
     echo "Install: Password required for sudo..."
-    sudo bash -c "$(declare -f install_overlays); KERNEL_VERSION=$KERNEL_VERSION OVERLAYS=(${OVERLAYS[*]}) install_overlays"
+    sudo bash -c "$(declare -f install_overlays); $(declare -p OVERLAYS); KERNEL_VERSION=$KERNEL_VERSION install_overlays"
 else
     install_overlays
 fi
