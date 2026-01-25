@@ -6,6 +6,7 @@
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/pinctrl/am33xx.h>
+#include <dt-bindings/clock/am3.h>
 
 /*
  * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
@@ -367,10 +368,18 @@
 };
 
 /* Konfiguracja DCAN1 (CAN bus) na pinach P9.24/P9.26 */
-&dcan1 {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&bb_dcan1_pins>;
+&ocp {
+	dcan1: can@481d0000 {
+		compatible = "ti,am3352-d_can";
+		reg = <0x481d0000 0x2000>;
+		clocks = <&l4ls_clkctrl AM3_L4LS_D_CAN1_CLKCTRL 0>;
+		clock-names = "fck";
+		syscon-raminit = <&scm_conf 0x644 1>;
+		interrupts = <55>;
+		status = "okay";
+		pinctrl-names = "default";
+		pinctrl-0 = <&bb_dcan1_pins>;
+	};
 };
 
 
