@@ -16,6 +16,14 @@
 	};
 };
 
+/*
+ * Free up the pins used by DCAN1 from the pinmux helpers.
+ */
+&ocp {
+	P9_24_pinmux { status = "disabled"; };	/* P9_24: uart1_txd.dcan1_tx */
+	P9_26_pinmux { status = "disabled"; };	/* P9_26: uart1_rxd.dcan1_rx */
+};
+
 &am33xx_pinmux {
 	bb_gpio_p8_37_pins: pinmux_bb_gpio_p8_37_pins {
 		pinctrl-single,pins = <
@@ -326,8 +334,8 @@
 
 	bb_dcan1_pins: pinmux_bb_dcan1_pins {
 		pinctrl-single,pins = <
-			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_OUTPUT_PULLUP, MUX_MODE2)	/* P9_24 uart1_txd.dcan1_tx */
-			AM33XX_PADCONF(AM335X_PIN_UART1_RXD, PIN_INPUT_PULLUP, MUX_MODE2)	/* P9_26 uart1_rxd.dcan1_rx */
+			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_INPUT_PULLUP, MUX_MODE2)	/* P9_24 uart1_txd.dcan1_rx */
+			AM33XX_PADCONF(AM335X_PIN_UART1_RXD, PIN_OUTPUT_PULLUP, MUX_MODE2)	/* P9_26 uart1_rxd.dcan1_tx */
 		>;
 	};
 
