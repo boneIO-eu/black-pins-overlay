@@ -324,13 +324,6 @@
 		>;
 	};
 
-	bb_uart1_pins: pinmux_bb_uart1_pins {
-		pinctrl-single,pins = <
-			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_OUTPUT, MUX_MODE0)	/* P9_24 uart1_txd.uart1_txd */
-			AM33XX_PADCONF(AM335X_PIN_UART1_RXD, PIN_INPUT, MUX_MODE0)	/* P9_26 uart1_rxd.uart1_rxd */
-		>;
-	};
-
 	bb_dcan1_pins: pinmux_bb_dcan1_pins {
 		pinctrl-single,pins = <
 			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_OUTPUT_PULLUP, MUX_MODE2)	/* P9_24 uart1_txd.dcan1_tx */
@@ -371,6 +364,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&bb_dcan1_pins>;
 };
+
 
 /* Konfiguracja UART4 */
 &uart4 {
