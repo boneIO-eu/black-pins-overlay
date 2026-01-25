@@ -331,6 +331,13 @@
 		>;
 	};
 
+	bb_dcan1_pins: pinmux_bb_dcan1_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_OUTPUT_PULLUP, MUX_MODE2)	/* P9_24 uart1_txd.dcan1_tx */
+			AM33XX_PADCONF(AM335X_PIN_UART1_RXD, PIN_INPUT_PULLUP, MUX_MODE2)	/* P9_26 uart1_rxd.dcan1_rx */
+		>;
+	};
+
 	bb_uart4_pins: pinmux_bb_uart4_pins {
 		pinctrl-single,pins = <
 			AM33XX_PADCONF(AM335X_PIN_GPMC_WPN, PIN_OUTPUT, MUX_MODE6)	/* P9_13 gpmc_wpn.uart4_txd_mux2 */
